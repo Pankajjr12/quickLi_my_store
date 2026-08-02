@@ -1,0 +1,288 @@
+<section class="upload-product">
+  <!-- Header -->
+  <div class="page-header">
+    <h2>Upload Product</h2>
+    <p>Add a new product to your inventory</p>
+  </div>
+
+  <form [formGroup]="productForm" (ngSubmit)="submit()" class="product-form">
+    <!-- ===========================
+           Product Name
+      ============================ -->
+
+    <div class="form-group">
+      <label>
+        Product Name
+        <span class="required">*</span>
+      </label>
+
+      <input type="text" formControlName="name" placeholder="Enter Product Name" />
+
+      <small
+        class="error"
+        *ngIf="productForm.get('name')?.invalid && productForm.get('name')?.touched"
+      >
+        Product name is required.
+      </small>
+    </div>
+
+    <!-- ===========================
+           Description
+      ============================ -->
+
+    <div class="form-group">
+      <label>
+        Description
+        <span class="required">*</span>
+      </label>
+
+      <textarea rows="5" formControlName="description" placeholder="Enter Product Description">
+      </textarea>
+
+      <small
+        class="error"
+        *ngIf="productForm.get('description')?.invalid && productForm.get('description')?.touched"
+      >
+        Description is required.
+      </small>
+    </div>
+
+    <!-- ===========================
+            Image Upload
+      ============================ -->
+
+    <div class="form-group">
+      <label> Product Images </label>
+
+      <label class="upload-box" for="uploadImage">
+        <input
+          id="uploadImage"
+          hidden
+          type="file"
+          accept="image/*"
+          (change)="uploadImage($event)"
+        />
+
+        <ng-container *ngIf="!imageLoading">
+          <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+
+          <h3>Upload Image</h3>
+
+          <p>Click here or drag & drop</p>
+        </ng-container>
+
+        <ng-container *ngIf="imageLoading">
+          <div class="spinner"></div>
+
+          <span>Uploading...</span>
+        </ng-container>
+      </label>
+    </div>
+
+    <!-- ===========================
+           Uploaded Images
+      ============================ -->
+
+    <div class="preview-grid" *ngIf="images.length">
+      <div class="image-card" *ngFor="let image of images.controls; let i = index">
+        <img [src]="image.value" (click)="previewImage(image.value)" alt="Product" />
+
+        <button type="button" class="delete-btn" (click)="deleteImage(i)">
+          <i class="fa-solid fa-trash"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- ===========================
+           Category
+      ============================ -->
+
+    <div class="form-group">
+      <label> Category </label>
+
+      <select
+        [(ngModel)]="selectCategory"
+        [ngModelOptions]="{ standalone: true }"
+        (change)="addCategory(selectCategory)"
+      >
+        <option value="">Select Category</option>
+
+        <option *ngFor="let category of allCategory" [value]="category._id">
+          {{ category.name }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Category Chips -->
+
+    <div class="chip-container" *ngIf="categories.length">
+      <div class="chip" *ngFor="let item of categories.controls; let i = index">
+        {{ getCategoryName(item.value) }}
+
+        <span (click)="removeCategory(i)"> × </span>
+      </div>
+    </div>
+
+    <!-- ===========================
+           Sub Category
+      ============================ -->
+
+    <div class="form-group" #subCategoryContainer>
+      <label>Sub Category</label>
+
+      <input
+        type="text"
+        [(ngModel)]="searchSubCategory"
+        [ngModelOptions]="{ standalone: true }"
+        placeholder="Search Sub Category..."
+        (input)="filterSubCategories()"
+        (focus)="showSubCategoryList = true"
+      />
+
+      <div class="search-dropdown" *ngIf="showSubCategoryList && filteredSubCategories.length">
+        <div
+          class="dropdown-item"
+          *ngFor="let sub of filteredSubCategories"
+          (click)="selectSub(sub)"
+        >
+          {{ sub.name }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Sub Category Chips -->
+
+    <div class="chip-container" *ngIf="subCategories.length">
+      <div class="chip" *ngFor="let item of subCategories.controls; let i = index">
+        {{ getSubCategoryName(item.value) }}
+
+        <span (click)="removeSubCategory(i)"> × </span>
+      </div>
+    </div>
+
+    <!-- ===========================
+           Unit
+      ============================ -->
+
+    <div class="form-group">
+      <label> Unit </label>
+
+      <input type="text" formControlName="unit" placeholder="Piece / Kg / Box" />
+    </div>
+
+    <!-- ===========================
+           Stock
+      ============================ -->
+
+    <div class="form-group">
+      <label> Stock </label>
+
+      <input type="number" formControlName="stock" placeholder="Enter Available Stock" />
+    </div>
+
+    <!-- ===========================
+           Price
+      ============================ -->
+
+    <div class="form-group">
+      <label> Price </label>
+
+      <input type="number" formControlName="price" placeholder="Enter Product Price" />
+    </div>
+
+    <!-- ===========================
+           Discount
+      ============================ -->
+
+    <div class="form-group">
+      <label> Discount % </label>
+
+      <input type="number" formControlName="discount" placeholder="Discount" />
+    </div>
+
+    <!-- ===========================
+         More Details
+    ============================ -->
+
+    <div class="more-details">
+      <div class="title-row">
+        <h3>More Details</h3>
+
+        <button type="button" class="add-btn" (click)="openAddField = true">
+          <i class="fa-solid fa-plus"></i>
+
+          Add Field
+        </button>
+      </div>
+
+      <div class="more-details" [formGroup]="moreDetails">
+        <div class="form-group" *ngFor="let field of moreDetails.controls | keyvalue">
+          <label>{{ field.key }}</label>
+
+          <div class="field-row">
+            <input type="text" [formControlName]="field.key" [placeholder]="'Enter ' + field.key" />
+
+            <button type="button" class="remove-btn" (click)="removeField(field.key)">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===========================
+           Submit Button
+      ============================ -->
+
+    <div class="submit-section">
+      <button type="submit" class="submit-btn" [disabled]="submitting">
+        <i *ngIf="!submitting" class="fa-solid fa-cloud-arrow-up"> </i>
+
+        <span>
+          {{ submitting ? 'Uploading Product...' : 'Upload Product' }}
+        </span>
+      </button>
+    </div>
+  </form>
+
+  <!-- ====================================
+         Image Preview Modal
+    ===================================== -->
+
+  <div class="image-modal" *ngIf="viewImageURL">
+    <div class="overlay" (click)="closePreview()"></div>
+
+    <div class="modal-content">
+      <button type="button" class="close-btn" (click)="closePreview()">×</button>
+
+      <img [src]="viewImageURL" alt="Preview" />
+    </div>
+  </div>
+
+  <!-- ====================================
+         Add Dynamic Field Popup
+    ===================================== -->
+
+  <div class="popup" *ngIf="openAddField">
+    <div class="overlay" (click)="openAddField = false"></div>
+
+    <div class="popup-card">
+      <h3>Add Product Attribute</h3>
+      <p>Create a new attribute for your product specifications.</p>
+      <input
+        type="text"
+        [(ngModel)]="fieldName"
+        [ngModelOptions]="{ standalone: true }"
+        placeholder="Enter Field Name"
+      />
+
+      <app-add-field
+        *ngIf="openAddField"
+        [(fieldName)]="fieldName"
+        (close)="openAddField = false"
+        (submit)="addField()"
+      >
+      </app-add-field>
+    </div>
+  </div>
+</section>

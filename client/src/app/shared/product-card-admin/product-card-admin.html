@@ -1,0 +1,190 @@
+<div class="product-card">
+
+  <!-- Product Image -->
+  <div class="image-box">
+    <img
+      [src]="product?.image?.[0]"
+      [alt]="product?.name || 'Product Image'">
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+
+    <!-- Unit -->
+    <div class="unit">
+      {{ product?.unit }}
+    </div>
+
+    <!-- Product Name -->
+    <h3 class="title">
+      {{ product?.name }}
+    </h3>
+
+    <!-- Price -->
+    <div class="price-section">
+
+      <div class="price-box">
+
+        <span class="price">
+          ₹{{
+            product?.discount
+              ? (product.price - (product.price * product.discount / 100))
+              : product?.price
+          | number:'1.0-0' }}
+        </span>
+
+        <span
+          class="old-price"
+          *ngIf="product?.discount">
+
+          ₹{{ product?.price }}
+
+        </span>
+
+      </div>
+
+    </div>
+
+    <!-- Stock & Discount -->
+    <div class="info-row">
+
+      <div class="stock">
+
+        <span
+          class="status"
+          [class.out]="product?.stock <= 0">
+        </span>
+
+        <span>
+          {{
+            product?.stock > 0
+              ? product.stock + ' in stock'
+              : 'Out of Stock'
+          }}
+        </span>
+
+      </div>
+
+      <span
+        class="offer"
+        *ngIf="product?.discount">
+
+        {{ product?.discount }}% OFF
+
+      </span>
+
+    </div>
+
+    <!-- Buttons -->
+    <div class="buttons">
+
+      <button
+        class="edit-btn"
+        (click)="openEdit()">
+
+        <i class="fa-solid fa-pen-to-square"></i>
+        Edit
+
+      </button>
+
+      <button
+        class="delete-btn"
+        (click)="openDeleteModal()">
+
+        <i class="fa-solid fa-trash"></i>
+        Delete
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ==========================
+Delete Modal
+========================== -->
+
+<section
+  class="delete-modal"
+  *ngIf="openDelete">
+
+  <div
+    class="overlay"
+    (click)="closeDeleteModal()">
+  </div>
+
+  <div class="modal-card">
+
+    <div class="modal-header">
+
+      <h3>Delete Product</h3>
+
+      <button
+        class="close-btn"
+        (click)="closeDeleteModal()">
+
+        ✕
+
+      </button>
+
+    </div>
+
+    <div class="modal-body">
+
+      <div class="product-preview">
+
+        <img
+          [src]="product?.image?.[0]"
+          [alt]="product?.name">
+
+        <div>
+
+          <h4>{{ product?.name }}</h4>
+
+          <p>{{ product?.unit }}</p>
+
+        </div>
+
+      </div>
+
+      <p class="warning">
+        Are you sure you want to permanently delete this product?
+        This action cannot be undone.
+      </p>
+
+    </div>
+
+    <div class="modal-actions">
+
+      <button
+        class="cancel-btn"
+        (click)="closeDeleteModal()">
+
+        Cancel
+
+      </button>
+
+      <button
+        class="confirm-btn"
+        [disabled]="deleting"
+        (click)="deleteProduct()">
+
+        {{ deleting ? 'Deleting...' : 'Delete' }}
+
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<app-edit-product-admin
+    *ngIf="editOpen"
+    [product]="product"
+    (close)="closeEdit()"
+    (refresh)="refresh.emit()">
+</app-edit-product-admin>

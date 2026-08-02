@@ -1,0 +1,52 @@
+<section
+  class="fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50">
+
+  <div class="bg-white rounded-lg w-full max-w-sm p-5">
+
+    <button
+      type="button"
+      (click)="closeModal()"
+      class="ml-auto block text-xl">
+
+      <i class="fa-solid fa-xmark"></i>
+
+    </button>
+
+    <div
+      class="w-20 h-20 rounded-full overflow-hidden bg-red-500 flex items-center justify-center mx-auto mt-3">
+
+      @if(user.avatar){
+
+      <img
+        [src]="user.avatar"
+        [alt]="user.name"
+        class="w-full h-full object-cover">
+
+      } @else {
+
+      <i class="fa-regular fa-circle-user text-6xl text-white"></i>
+
+      }
+
+    </div>
+
+    <div class="mt-5 text-center">
+
+      <label
+        for="uploadProfile"
+        class="border border-orange-500 hover:bg-orange-500 hover:text-white rounded px-4 py-2 cursor-pointer">
+
+        {{ loading ? 'Loading...' : 'Upload' }}
+
+      </label>
+
+      <input
+        id="uploadProfile"
+        type="file"
+        hidden
+        accept="image/*"
+        (change)="uploadAvatar($event)">
+    </div>
+  </div>
+
+</section>

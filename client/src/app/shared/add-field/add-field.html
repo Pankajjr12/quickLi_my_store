@@ -1,0 +1,43 @@
+<div class="overlay" (click)="close.emit()">
+
+  <div class="popup" (click)="$event.stopPropagation()">
+
+    <div class="popup-header">
+      <h3>Add Field</h3>
+
+      <button
+        type="button"
+        class="close-btn"
+        (click)="close.emit()">
+        ✕
+      </button>
+    </div>
+
+    <input
+      type="text"
+      placeholder="Enter field name"
+      [value]="fieldName"
+      (input)="onInput($event)">
+
+    <div class="popup-buttons">
+
+      <button
+        type="button"
+        class="cancel-btn"
+        (click)="close.emit()">
+        Cancel
+      </button>
+
+      <button
+        type="button"
+        class="save-btn"
+        [disabled]="!fieldName.trim()"
+        (click)="submit.emit()">
+        Add Field
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

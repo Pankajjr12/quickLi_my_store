@@ -1,0 +1,122 @@
+<div class="dialog">
+
+    <div class="dialog-header">
+
+        <h2>Add Sub Category</h2>
+
+        <button
+            type="button"
+            class="close-btn"
+            (click)="dialogRef.close()">
+
+            ✕
+
+        </button>
+
+    </div>
+
+    <form
+        [formGroup]="form"
+        (ngSubmit)="submit()">
+
+        <div class="form-group">
+
+            <label>Name</label>
+
+            <input
+                type="text"
+                formControlName="name"
+                placeholder="Enter sub category">
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Image</label>
+
+            <div class="image-area">
+
+                <div class="preview">
+
+                    <img
+                        *ngIf="imageUrl"
+                        [src]="imageUrl">
+
+                    <span *ngIf="!imageUrl">
+
+                        No Image
+
+                    </span>
+
+                </div>
+
+                <label class="upload-btn">
+
+                    {{loading ? 'Uploading...' : 'Upload Image'}}
+
+                    <input
+                        hidden
+                        type="file"
+                        (change)="uploadImage($event)">
+
+                </label>
+
+            </div>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Select Category</label>
+
+            <div class="selected">
+
+                <span
+                    *ngFor="let item of selectedCategories"
+                    class="chip">
+
+                    {{item.name}}
+
+                    <button
+                        type="button"
+                        (click)="removeCategory(item._id)">
+
+                        ✕
+
+                    </button>
+
+                </span>
+
+            </div>
+
+            <select (change)="addCategory($event)">
+
+                <option value="">
+
+                    Select Category
+
+                </option>
+
+                <option
+                    *ngFor="let item of allCategory"
+                    [value]="item._id">
+
+                    {{item.name}}
+
+                </option>
+
+            </select>
+
+        </div>
+
+        <button
+            class="submit-btn"
+            [disabled]="loading || !form.valid || !imageUrl">
+
+            Submit
+
+        </button>
+
+    </form>
+
+</div>

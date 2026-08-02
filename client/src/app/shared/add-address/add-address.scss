@@ -1,0 +1,35 @@
+.add-card {
+    cursor: pointer;
+    min-height: 220px;
+    transition: .3s;
+    border-style: dashed !important;
+  }
+  
+  .add-card:hover {
+    background: #f8f9fa;
+    transform: translateY(-3px);
+  }
+  
+  .card {
+    border-radius: 12px;
+  }
+  
+  .btn {
+    transition: .2s;
+  }
+  
+  .btn:hover {
+    transform: scale(1.05);
+  }
+  
+  @media (max-width: 768px) {
+  
+    .card-header {
+      text-align: center;
+    }
+  
+    .card-header .btn {
+      width: 100%;
+    }
+  
+  }

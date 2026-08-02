@@ -1,0 +1,75 @@
+<section>
+  <div class="p-2 bg-white shadow-md flex items-center justify-between gap-4">
+    <h2 class="font-semibold">Product</h2>
+
+    <div
+      class="h-full min-w-24 max-w-56 w-full ml-auto bg-blue-50 px-4 flex items-center gap-3 py-2 rounded border focus-within:border-primary-200"
+    >
+      <i class="fa-solid fa-magnifying-glass text-gray-500"></i>
+
+      <input
+        type="text"
+        placeholder="Search product here..."
+        class="h-full w-full outline-none bg-transparent"
+        [value]="search"
+        (input)="onSearch($event)"
+      />
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="flex justify-center py-20">
+    <app-loading></app-loading>
+  </div>
+
+  <div class="p-4 bg-blue-50">
+    <div class="min-h-[55vh]">
+      <!-- Products -->
+      <div *ngIf="!loading && products.length > 0" class="products-grid">
+        <app-product-card-admin
+          *ngFor="let product of products"
+          [product]="product"
+          (refresh)="fetchProducts()"
+        >
+        </app-product-card-admin>
+      </div>
+
+      <!-- No Products -->
+      <div
+        *ngIf="!loading && products.length === 0"
+        class="flex flex-col items-center justify-center py-16"
+      >
+      <img
+      src="/images/nodata.png"
+      alt="No products found"
+      class="w-56 h-56 object-contain"
+    />
+
+        <h3 class="mt-4 text-xl font-semibold text-gray-700">No products found</h3>
+
+        <p class="text-gray-500">Try searching with a different keyword.</p>
+      </div>
+    </div>
+
+    <div class="flex justify-between items-center gap-3 my-4">
+      <button
+        (click)="previousPage()"
+        [disabled]="page === 1"
+        class="border border-primary-200 px-4 py-2 hover:bg-primary-200 disabled:opacity-50"
+      >
+        Previous
+      </button>
+
+      <button class="flex-1 bg-slate-100 py-2 rounded cursor-default">
+        {{ page }} / {{ totalPageCount }}
+      </button>
+
+      <button
+        (click)="nextPage()"
+        [disabled]="page === totalPageCount"
+        class="border border-primary-200 px-4 py-2 hover:bg-primary-200 disabled:opacity-50"
+      >
+        Next
+      </button>
+    </div>
+  </div>
+</section>

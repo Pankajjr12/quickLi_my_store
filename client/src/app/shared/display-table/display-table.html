@@ -1,0 +1,91 @@
+<div class="table-container">
+
+    <table class="custom-table">
+  
+      <thead>
+  
+        <tr>
+  
+          <th>Sr.No</th>
+  
+          <th *ngFor="let column of columns">
+            {{ column.header }}
+          </th>
+  
+        </tr>
+  
+      </thead>
+  
+      <tbody>
+  
+        <tr *ngFor="let row of data; let i = index">
+  
+          <td>{{ i + 1 }}</td>
+  
+          <td *ngFor="let column of columns">
+  
+            <ng-container [ngSwitch]="column.type">
+  
+              <!-- Text -->
+              <span *ngSwitchDefault>
+                {{ row[column.field] }}
+              </span>
+  
+              <!-- Image -->
+              <img
+                *ngSwitchCase="'image'"
+                class="table-image"
+                [src]="row[column.field]"
+                [alt]="row.name"
+                (click)="column.onClick(row)"
+              >
+  
+              <!-- Categories -->
+              <div
+                *ngSwitchCase="'categories'"
+                class="chip-wrapper">
+  
+                <span
+                  class="category-chip"
+                  *ngFor="let category of row[column.field]">
+  
+                  {{ category.name }}
+  
+                </span>
+  
+              </div>
+  
+              <!-- Actions -->
+              <div
+                *ngSwitchCase="'actions'"
+                class="action-buttons">
+  
+                <button
+                  class="edit-btn"
+                  (click)="column.onEdit(row)">
+  
+                  <i class="fa-solid fa-pen"></i>
+  
+                </button>
+  
+                <button
+                  class="delete-btn"
+                  (click)="column.onDelete(row)">
+  
+                  <i class="fa-solid fa-trash"></i>
+  
+                </button>
+  
+              </div>
+  
+            </ng-container>
+  
+          </td>
+  
+        </tr>
+  
+      </tbody>
+  
+    </table>
+  
+  </div>

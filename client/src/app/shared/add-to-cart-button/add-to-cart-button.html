@@ -1,0 +1,45 @@
+<div class="w-[72px] sm:w-[96px]">
+  <!-- Already Added -->
+
+  <div *ngIf="isAvailableCart" class="flex h-9 w-full">
+    <button
+      (click)="decreaseQty()"
+      class="flex-1 bg-green-600 hover:bg-green-700 text-white rounded-l-lg"
+    >
+      −
+    </button>
+
+    <div class="flex-1 flex items-center justify-center bg-green-50 font-bold text-sm">
+      {{ qty }}
+    </div>
+
+    <button
+      (click)="increaseQty()"
+      class="flex-1 bg-green-600 hover:bg-green-700 text-white rounded-r-lg"
+    >
+      +
+    </button>
+  </div>
+
+  <!-- Add Button -->
+
+  <button
+    *ngIf="!isAvailableCart && data.stock > 0"
+    (click)="addToCart()"
+    class="w-full h-8 rounded-lg text-xs font-bold bg-green-600 hover:bg-green-700 text-white"
+  >
+    <span *ngIf="!loading"> ADD </span>
+
+    <span *ngIf="loading"> ... </span>
+  </button>
+
+  <!-- Out -->
+
+  <button
+    *ngIf="data.stock <= 0"
+    disabled
+    class="w-full h-9 rounded-xl bg-gray-200 text-gray-500 text-sm"
+  >
+    OUT
+  </button>
+</div>

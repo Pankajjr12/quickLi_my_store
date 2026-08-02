@@ -1,0 +1,64 @@
+<section class="w-full container mx-auto px-2">
+
+    <div class="bg-white my-4 w-full max-w-lg mx-auto rounded p-7">
+
+        <h2 class="font-semibold text-lg mb-5">
+            Enter OTP
+        </h2>
+
+        <form
+            [formGroup]="otpForm"
+            (ngSubmit)="verifyOtp()">
+
+            <label class="block mb-3">
+                Enter Your OTP :
+            </label>
+
+            <div
+                formArrayName="otp"
+                class="flex justify-between gap-2 mb-5">
+
+                <input
+                    *ngFor="let control of otpArray.controls; let i = index"
+                    #otpInput
+                    type="text"
+                    maxlength="1"
+                    [formControlName]="i"
+                    (input)="onInput($event,i)"
+                    (keydown)="onKeyDown($event,i)"
+                    class="w-12 h-12 border rounded bg-blue-50 text-center text-lg font-semibold outline-none focus:border-green-600">
+
+            </div>
+
+            <button
+                type="submit"
+                [disabled]="otpForm.invalid"
+                class="w-full py-2 rounded text-white font-semibold"
+                [ngClass]="{
+                    'bg-green-700 hover:bg-green-800': otpForm.valid,
+                    'bg-gray-500': otpForm.invalid
+                }">
+
+                Verify OTP
+
+            </button>
+
+        </form>
+
+        <p class="mt-5 text-center">
+
+            Already have account?
+
+            <a
+                routerLink="/login"
+                class="text-green-700 font-semibold hover:text-green-800">
+
+                Login
+
+            </a>
+
+        </p>
+
+    </div>
+
+</section>

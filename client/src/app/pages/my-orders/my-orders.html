@@ -1,0 +1,79 @@
+<div class="orders-page">
+
+  <!-- Header -->
+  <div class="page-header">
+    <div class="filters">
+
+      <button
+        [class.active]="selectedTab === 'All'"
+        (click)="changeTab('All')">
+        All
+      </button>
+
+      <button
+        [class.active]="selectedTab === 'Cash'"
+        (click)="changeTab('Cash')">
+        Cash
+      </button>
+
+      <button
+        [class.active]="selectedTab === 'Online'"
+        (click)="changeTab('Online')">
+        Online
+      </button>
+
+    </div>
+  </div>
+
+  <!-- No Orders -->
+  <div class="no-data" *ngIf="filteredOrders.length === 0">
+    No Orders Found
+  </div>
+
+  <!-- Orders -->
+  <div class="order-card" *ngFor="let order of filteredOrders">
+
+    <div class="order-top">
+
+      <div class="status">
+
+        <span
+          class="badge"
+          [ngClass]="{
+            cash: getPaymentType(order) === 'Cash',
+            online: getPaymentType(order) === 'Online'
+          }">
+
+          {{ getPaymentType(order) }}
+
+        </span>
+
+        <span class="date">
+          {{ order.createdAt | date:'dd MMM yyyy' }}
+        </span>
+
+      </div>
+
+    </div>
+
+    <div class="order-body">
+
+      <img
+        [src]="order.product_details?.image[0]"
+        [alt]="order.product_details?.name">
+
+      <div class="details">
+
+        <h4>Order ID : {{ order.orderId }}</h4>
+
+        <p>{{ order.product_details?.name }}</p>
+
+        <h3>₹ {{ order.totalAmt | number }}</h3>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

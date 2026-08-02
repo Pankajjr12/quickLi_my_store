@@ -1,0 +1,46 @@
+<section class="container mx-auto px-4 mt-10">
+  <div class="flex justify-between items-center mb-5">
+    <h3 class="font-semibold text-lg">
+      {{ name }}
+    </h3>
+
+    <button (click)="seeAll()" class="text-green-600 hover:text-green-500">See All</button>
+  </div>
+
+  <div class="relative">
+    <div #scrollContainer class="flex gap-4 overflow-x-auto scrollbar-hide scroll-smooth pb-2">
+      <!-- Loading Cards -->
+      <ng-container *ngIf="loading">
+        <app-card-loading *ngFor="let _ of loadingCards"> </app-card-loading>
+      </ng-container>
+
+      <!-- Product Cards -->
+      <ng-container *ngIf="!loading">
+        <div
+          *ngFor="let product of products"
+          class="w-[170px] sm:w-[190px] lg:w-[220px] flex-shrink-0"
+        >
+          <app-card-product [product]="product"> </app-card-product>
+        </div>
+      </ng-container>
+    </div>
+
+    <!-- Left -->
+    <button
+      *ngIf="!loading && showArrow"
+      (click)="scrollLeft()"
+      class="absolute left-0 top-1/2 -translate-y-1/2 bg-white shadow-lg rounded-full w-10 h-10 flex items-center justify-center z-10"
+    >
+      <i class="fa-solid fa-angle-left"></i>
+    </button>
+
+    <!-- Right -->
+    <button
+      *ngIf="!loading && showArrow"
+      (click)="scrollRight()"
+      class="absolute right-0 top-1/2 -translate-y-1/2 bg-white shadow-lg rounded-full w-10 h-10 flex items-center justify-center z-10"
+    >
+      <i class="fa-solid fa-angle-right"></i>
+    </button>
+  </div>
+</section>

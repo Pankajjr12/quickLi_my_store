@@ -1,0 +1,87 @@
+<div class="dialog-container">
+
+    <div class="dialog-header">
+  
+      <h2>Update Category</h2>
+  
+      <button
+        type="button"
+        class="close-btn"
+        (click)="dialogRef.close()">
+  
+        ✕
+  
+      </button>
+  
+    </div>
+  
+    <form
+      [formGroup]="categoryForm"
+      (ngSubmit)="updateCategory()">
+  
+      <!-- Name -->
+  
+      <div class="form-group">
+  
+        <label>Name</label>
+  
+        <input
+          type="text"
+          formControlName="name"
+          placeholder="Enter category name">
+  
+      </div>
+  
+      <!-- Image -->
+  
+      <div class="form-group">
+  
+        <label>Image</label>
+  
+        <div class="image-section">
+  
+          <div class="image-preview">
+  
+            <img
+              *ngIf="imageUrl"
+              [src]="imageUrl">
+  
+            <span *ngIf="!imageUrl">
+              No Image
+            </span>
+  
+          </div>
+  
+          <div>
+  
+            <label
+              class="upload-btn"
+              [class.disabled]="!categoryForm.get('name')?.value">
+  
+              {{ loading ? 'Uploading...' : 'Upload Image' }}
+  
+              <input
+                type="file"
+                hidden
+                (change)="uploadImage($event)"
+                [disabled]="!categoryForm.get('name')?.value">
+  
+            </label>
+  
+          </div>
+  
+        </div>
+  
+      </div>
+  
+      <button
+        class="submit-btn"
+        [disabled]="!categoryForm.valid || !imageUrl || loading">
+  
+        Update Category
+  
+      </button>
+  
+    </form>
+  
+  </div>

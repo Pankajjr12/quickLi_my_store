@@ -1,0 +1,179 @@
+<section class="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm" (click)="close()">
+  <div
+    class="cart-panel bg-white w-full max-w-sm h-screen ml-auto flex flex-col"
+    (click)="$event.stopPropagation()"
+  >
+    <!-- Header -->
+    <div class="flex items-center p-4 shadow-md justify-between shrink-0">
+      <h2 class="font-semibold text-lg">Cart</h2>
+
+      <button (click)="close()" class="text-xl hover:text-red-500 transition">
+        ✕
+      </button>
+    </div>
+
+    <ng-container *ngIf="cartItems.length > 0; else emptyCart">
+
+      <!-- Saving -->
+      <div class="bg-blue-50 p-2 shrink-0">
+        <div class="flex justify-between px-4 py-2 bg-blue-100 text-blue-600 rounded-full">
+          <p>Your total savings</p>
+          <p>{{ displayPrice(notDiscountTotalPrice - totalPrice) }}</p>
+        </div>
+      </div>
+
+      <!-- Scrollable Items -->
+      <div class="flex-1 overflow-y-auto bg-blue-50 px-2">
+        <div class="bg-white rounded-lg p-4 grid gap-5">
+          <div *ngFor="let item of cartItems" class="flex gap-4">
+
+            <div class="w-24 h-16 border rounded shrink-0">
+              <img
+                [src]="item.productId.image[0]"
+                class="object-scale-down w-full h-full"
+              />
+            </div>
+
+            <div class="flex-1 text-xs">
+              <p class="line-clamp-2">
+                {{ item.productId.name }}
+              </p>
+
+              <p class="text-neutral-400">
+                {{ item.productId.unit }}
+              </p>
+
+              <p class="font-semibold">
+                {{
+                  displayPrice(
+                    priceWithDiscount(
+                      item.productId.price,
+                      item.productId.discount
+                    )
+                  )
+                }}
+              </p>
+            </div>
+
+            <app-add-to-cart-button
+              [data]="item.productId">
+            </app-add-to-cart-button>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Bill -->
+      <div class="bg-blue-50 p-2 shrink-0">
+        <div class="bg-white p-4 rounded-lg">
+          <h3 class="font-semibold mb-3">Bill details</h3>
+
+          <div class="flex justify-between mb-2">
+            <p>Items total</p>
+
+            <p>
+              <span class="line-through text-neutral-400">
+                {{ displayPrice(notDiscountTotalPrice) }}
+              </span>
+
+              &nbsp;
+
+              <span>
+                {{ displayPrice(totalPrice) }}
+              </span>
+            </p>
+          </div>
+
+          <div class="flex justify-between mb-2">
+            <p>Quantity total</p>
+            <p>{{ totalQty }} item</p>
+          </div>
+
+          <div class="flex justify-between mb-2">
+            <p>Delivery Charge</p>
+            <p class="text-green-600 font-medium">Free</p>
+          </div>
+
+          <hr class="my-2" />
+
+          <div class="flex justify-between font-semibold text-lg">
+            <p>Grand total</p>
+            <p>{{ displayPrice(totalPrice) }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Proceed Button -->
+      <div class="p-2 shrink-0">
+        <div class="bg-green-700 text-white px-4 py-4 rounded flex justify-between items-center">
+          <div class="font-bold">
+            {{ displayPrice(totalPrice) }}
+          </div>
+
+          <button
+            (click)="redirectToCheckoutPage()"
+            [disabled]="loading"
+            class="flex items-center gap-2"
+          >
+            <span *ngIf="!loading">
+              Click to Proceed ➜
+            </span>
+
+            <span *ngIf="loading" class="flex items-center gap-2">
+              <svg class="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                <circle
+                  class="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="4"
+                  fill="none"
+                ></circle>
+
+                <path
+                  class="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8z"
+                ></path>
+              </svg>
+
+              Loading...
+            </span>
+          </button>
+        </div>
+      </div>
+
+    </ng-container>
+
+    <!-- Empty Cart -->
+    <ng-template #emptyCart>
+      <div class="flex-1 flex items-center justify-center bg-blue-50 p-4">
+        <div class="bg-white rounded-lg p-6 text-center w-full">
+          <img
+            src="images/nodata.png"
+            alt="Empty Cart"
+            class="w-72 h-72 object-contain mx-auto"
+          />
+
+          <h3 class="text-xl font-semibold mt-4">
+            Your Cart is Empty
+          </h3>
+
+          <p class="text-gray-500 mt-2 mb-6">
+            Looks like you haven't added any products yet.
+          </p>
+
+          <a
+            routerLink="/"
+            (click)="close()"
+            class="inline-block bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg"
+          >
+            🛒 Shop Now
+          </a>
+        </div>
+      </div>
+    </ng-template>
+
+  </div>
+</section>

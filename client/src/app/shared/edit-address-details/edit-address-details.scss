@@ -1,0 +1,423 @@
+/* ===========================
+   MODAL BACKDROP
+=========================== */
+
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    padding: 20px;
+  
+    background: rgba(17, 24, 39, .45);
+    backdrop-filter: blur(8px);
+  
+    animation: fadeIn .25s ease;
+  }
+  
+  /* ===========================
+     MODAL CARD
+  =========================== */
+  
+  .modal-card {
+  
+    width: 100%;
+    max-width: 720px;
+  
+    max-height: 92vh;
+    overflow-y: auto;
+  
+    background: #fff;
+  
+    border-radius: 24px;
+  
+    padding: 28px;
+  
+    box-shadow:
+        0 25px 60px rgba(0,0,0,.18);
+  
+    animation: popup .3s ease;
+  }
+  
+  /* Nice Scrollbar */
+  
+  .modal-card::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .modal-card::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 20px;
+  }
+  
+  /* ===========================
+     HEADER
+  =========================== */
+  
+  .modal-header {
+  
+    display: flex;
+  
+    justify-content: space-between;
+  
+    align-items: center;
+  
+    margin-bottom: 28px;
+  
+  }
+  
+  .modal-header h3 {
+  
+    margin: 0;
+  
+    font-size: 28px;
+  
+    font-weight: 700;
+  
+    color: #111827;
+  
+  }
+  
+  .modal-header p {
+  
+    margin: 5px 0 0;
+  
+    color: #6b7280;
+  
+    font-size: 14px;
+  
+  }
+  
+  /* ===========================
+     CLOSE BUTTON
+  =========================== */
+  
+  .close-btn {
+  
+    width: 44px;
+  
+    height: 44px;
+  
+    border: none;
+  
+    border-radius: 50%;
+  
+    background: #f3f4f6;
+  
+    color: #555;
+  
+    transition: .3s;
+  
+    display: flex;
+  
+    justify-content: center;
+  
+    align-items: center;
+  
+  }
+  
+  .close-btn:hover {
+  
+    background: #ef4444;
+  
+    color: white;
+  
+    transform: rotate(90deg);
+  
+  }
+  
+  /* ===========================
+     FORM
+  =========================== */
+  
+  .field {
+  
+    margin-bottom: 20px;
+  
+  }
+  
+  .field label {
+  
+    display: block;
+  
+    font-size: 14px;
+  
+    font-weight: 600;
+  
+    margin-bottom: 8px;
+  
+    color: #374151;
+  
+  }
+  
+  /* ===========================
+     INPUT
+  =========================== */
+  
+  .input-wrapper {
+  
+    position: relative;
+  
+  }
+  
+  .input-wrapper i {
+  
+    position: absolute;
+  
+    left: 18px;
+  
+    top: 50%;
+  
+    transform: translateY(-50%);
+  
+    color: #22c55e;
+  
+    font-size: 18px;
+  
+    transition: .3s;
+  
+  }
+  
+  .input-wrapper.textarea i {
+  
+    top: 22px;
+  
+    transform: none;
+  
+  }
+  
+  .form-control {
+  
+    width: 100%;
+  
+    height: 56px;
+  
+    padding-left: 52px;
+  
+    border: 2px solid #edf1f5;
+  
+    border-radius: 16px;
+  
+    background: #f8fafc;
+  
+    color: #111827;
+  
+    font-size: 15px;
+  
+    transition: all .25s ease;
+  
+    box-shadow: none;
+  
+  }
+  
+  textarea.form-control {
+  
+    height: auto;
+  
+    min-height: 120px;
+  
+    padding-top: 14px;
+  
+    resize: none;
+  
+  }
+  
+  .form-control::placeholder {
+  
+    color: #9ca3af;
+  
+  }
+  
+  .form-control:hover {
+  
+    border-color: #d1d5db;
+  
+    background: #fff;
+  
+  }
+  
+  .form-control:focus {
+  
+    border-color: #22c55e;
+  
+    background: #fff;
+  
+    box-shadow: 0 0 0 5px rgba(34,197,94,.12);
+  
+  }
+  
+  .input-wrapper:focus-within i {
+  
+    color: #16a34a;
+  
+  }
+  
+  /* ===========================
+     BUTTONS
+  =========================== */
+  
+  .modal-footer {
+  
+    display: flex;
+  
+    justify-content: flex-end;
+  
+    gap: 14px;
+  
+    margin-top: 30px;
+  
+  }
+  
+  .modal-footer .btn {
+  
+    height: 52px;
+  
+    border-radius: 14px;
+  
+    padding: 0 24px;
+  
+    font-weight: 600;
+  
+    transition: .3s;
+  
+  }
+  
+  .modal-footer .btn-light {
+  
+    background: #f3f4f6;
+  
+    border: none;
+  
+  }
+  
+  .modal-footer .btn-light:hover {
+  
+    background: #e5e7eb;
+  
+  }
+  
+  .save-btn {
+  
+    background: linear-gradient(135deg,#22c55e,#16a34a);
+  
+    color: white;
+  
+    border: none;
+  
+  }
+  
+  .save-btn:hover {
+  
+    transform: translateY(-2px);
+  
+    box-shadow: 0 12px 24px rgba(34,197,94,.25);
+  
+    color: white;
+  
+  }
+  
+  /* ===========================
+     ANIMATION
+  =========================== */
+  
+  @keyframes popup {
+  
+    from {
+  
+      opacity: 0;
+  
+      transform: translateY(20px) scale(.96);
+  
+    }
+  
+    to {
+  
+      opacity: 1;
+  
+      transform: translateY(0) scale(1);
+  
+    }
+  
+  }
+  
+  @keyframes fadeIn {
+  
+    from {
+  
+      opacity: 0;
+  
+    }
+  
+    to {
+  
+      opacity: 1;
+  
+    }
+  
+  }
+  
+  /* ===========================
+     MOBILE
+  =========================== */
+  
+  @media (max-width:768px){
+  
+  .modal-backdrop{
+  
+  padding:12px;
+  
+  align-items:flex-end;
+  
+  }
+  
+  .modal-card{
+  
+  max-width:100%;
+  
+  width:100%;
+  
+  border-radius:24px 24px 0 0;
+  
+  padding:20px;
+  
+  max-height:90vh;
+  
+  }
+  
+  .modal-header h3{
+  
+  font-size:22px;
+  
+  }
+  
+  .modal-footer{
+  
+  flex-direction:column-reverse;
+  
+  }
+  
+  .modal-footer .btn{
+  
+  width:100%;
+  
+  }
+  
+  .form-control{
+  
+  height:54px;
+  
+  font-size:14px;
+  
+  }
+  
+  textarea.form-control{
+  
+  min-height:110px;
+  
+  }
+  
+  }

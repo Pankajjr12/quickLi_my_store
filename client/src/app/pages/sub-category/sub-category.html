@@ -1,0 +1,46 @@
+<section class="sub-category-page">
+
+  <div class="page-header">
+
+    <div>
+
+      <h2>Sub Categories</h2>
+
+      <p>{{ subCategoryData.length }} Sub Categories</p>
+
+    </div>
+
+    <button
+      class="add-btn"
+      (click)="openUploadSubCategory()">
+
+      + Add Sub Category
+
+    </button>
+
+  </div>
+
+  <div class="search-wrapper">
+    <input
+      type="text"
+      [(ngModel)]="searchText"
+      (input)="filterSubCategories()"
+      placeholder="🔍 Search by sub category or category..."
+      class="search-input"
+    />
+  </div>
+  <app-loading *ngIf="loading"></app-loading>
+
+  <app-no-data
+    *ngIf="!loading && subCategoryData.length === 0"
+    title="No Sub Categories Found"
+    message="Create your first sub category.">
+  </app-no-data>
+
+  <app-display-table
+    *ngIf="!loading && subCategoryData.length"
+    [data]="subCategoryData"
+    [columns]="columns">
+  </app-display-table>
+
+</section>

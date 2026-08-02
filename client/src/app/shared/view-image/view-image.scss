@@ -1,0 +1,28 @@
+.image-viewer {
+    position: relative;
+    background: #fff;
+    padding: 16px;
+    max-width: 500px;
+    max-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .image-viewer img {
+    width: 100%;
+    max-height: 70vh;
+    object-fit: contain;
+  }
+  
+  .close-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 22px;
+  }

@@ -1,0 +1,88 @@
+<div class="overlay">
+
+  <div class="popup">
+
+    <!-- Header -->
+    <div class="popup-header">
+
+      <h2>Category</h2>
+
+      <button
+        type="button"
+        class="close-btn"
+        (click)="close()">
+        ✕
+      </button>
+
+    </div>
+
+    <!-- Form -->
+    <form [formGroup]="categoryForm" (ngSubmit)="saveCategory()">
+
+      <!-- Category Name -->
+      <div class="form-group">
+
+        <label>Category Name</label>
+
+        <input
+          type="text"
+          formControlName="name"
+          placeholder="Enter category name">
+
+      </div>
+
+      <!-- Image Upload -->
+      <div class="form-group">
+
+        <p>Image</p>
+
+        <div class="image-section">
+
+          <div class="preview-box">
+
+            <img
+              *ngIf="imageUrl"
+              [src]="imageUrl">
+
+            <p *ngIf="!imageUrl">
+              No Image
+            </p>
+
+          </div>
+
+          <div>
+
+            <label
+              class="upload-btn"
+              [class.disabled]="!categoryForm.get('name')?.value">
+
+              Upload Image
+
+              <input
+                type="file"
+                hidden
+                (change)="uploadImage($event)"
+                [disabled]="!categoryForm.get('name')?.value">
+
+            </label>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Button -->
+      <button
+        class="save-btn"
+        [disabled]="categoryForm.invalid || loading">
+
+        {{loading ? 'Saving...' : 'Add Category'}}
+
+      </button>
+
+    </form>
+
+  </div>
+
+</div>

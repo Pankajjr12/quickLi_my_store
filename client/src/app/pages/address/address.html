@@ -1,0 +1,147 @@
+<div class="address-page mt-2">
+
+  <!-- Header -->
+  <div class="address-header">
+
+    <div>
+      <h2>Saved Addresses</h2>
+      <p>Manage your delivery addresses</p>
+    </div>
+
+    <button class="btn add-btn" (click)="addAddress()">
+      <i class="bi bi-plus-lg"></i>
+      Add Address
+    </button>
+
+  </div>
+
+  <!-- Loading -->
+
+  <div *ngIf="loading" class="loading-box">
+
+    <div class="spinner-border text-success"></div>
+
+    <p>Loading addresses...</p>
+
+  </div>
+
+  <!-- Cards -->
+
+  <div class="row g-4" *ngIf="!loading">
+
+    <div class="col-xl-6 col-lg-6 col-md-6" *ngFor="let address of addresses">
+
+      <div class="address-card" *ngIf="address.status">
+
+        <div class="card-top">
+
+          <div class="icon-box">
+
+            <i class="bi bi-geo-alt-fill"></i>
+
+          </div>
+
+          <div class="address-details">
+
+            <h5>
+              {{address.type || 'Home'}}
+            </h5>
+
+            <p>
+
+              {{address.address_line}}
+
+            </p>
+
+            <small>
+
+              {{address.city}}, {{address.state}}
+
+            </small>
+
+            <small>
+
+              {{address.country}} - {{address.pincode}}
+
+            </small>
+
+            <div class="phone">
+
+              <i class="bi bi-telephone-fill"></i>
+
+              {{address.mobile}}
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="actions">
+
+          <button
+            class="edit-btn"
+            (click)="editAddress(address)">
+
+            <i class="bi bi-pencil"></i>
+
+            Edit
+
+          </button>
+
+          <button
+            class="delete-btn"
+            (click)="deleteAddress(address._id)">
+
+            <i class="bi bi-trash"></i>
+
+            Delete
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Empty -->
+
+  <div
+    *ngIf="!loading && addresses.length==0"
+    class="empty-state">
+
+    <i class="bi bi-geo-alt"></i>
+
+    <h3>No Address Found</h3>
+
+    <p>Add your first delivery address</p>
+
+    <button
+      class="btn add-btn"
+      (click)="addAddress()">
+
+      Add Address
+
+    </button>
+
+  </div>
+
+</div>
+
+<!-- Add Address -->
+
+<app-add-address
+  *ngIf="openAddress"
+  (close)="closeAddModal()">
+</app-add-address>
+
+<!-- Edit Address -->
+
+<app-edit-address-details
+  *ngIf="openEdit"
+  [data]="editData"
+  (close)="closeEditModal()">
+</app-edit-address-details>

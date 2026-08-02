@@ -1,0 +1,112 @@
+@if (user) {
+
+  <div>
+  
+    <div class="font-semibold">
+      My Account
+    </div>
+  
+    <div class="text-sm flex items-center gap-2">
+  
+      <span class="max-w-52 truncate">
+        {{ user.name || user.mobile }}
+  
+        @if(user.role === 'ADMIN'){
+        <span class="text-red-600">
+          (Admin)
+        </span>
+        }
+  
+      </span>
+  
+      <a
+       [routerLink]="['/dashboard/profile']"
+        (click)="handleClose()"
+        class="hover:text-primary-200"
+      >
+        <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
+      </a>
+  
+    </div>
+  
+    <hr class="my-3">
+  
+    <div class="text-sm grid gap-1">
+  
+      @if(isAdmin(user.role)){
+  
+      <a
+        [routerLink]="['/dashboard/category']"
+        (click)="handleClose()"
+        class="px-2 py-1 hover:bg-orange-200"
+      >
+        Category
+      </a>
+  
+      }
+  
+      @if(isAdmin(user.role)){
+  
+      <a
+       [routerLink]="['/dashboard/subcategory']"
+        (click)="handleClose()"
+        class="px-2 py-1 hover:bg-orange-200"
+      >
+        Sub Category
+      </a>
+  
+      }
+  
+      @if(isAdmin(user.role)){
+  
+      <a
+       [routerLink]="['/dashboard/upload-product']"
+        (click)="handleClose()"
+        class="px-2 py-1 hover:bg-orange-200"
+      >
+        Upload Product
+      </a>
+  
+      }
+  
+      @if(isAdmin(user.role)){
+  
+      <a
+       [routerLink]="['/dashboard/product']"
+        (click)="handleClose()"
+        class="px-2 py-1 hover:bg-orange-200"
+      >
+        Product
+      </a>
+  
+      }
+  
+      <a
+        [routerLink]="['/dashboard/myorders']"
+        (click)="handleClose()"
+        class="px-2 py-1 hover:bg-orange-200"
+      >
+        My Orders
+      </a>
+  
+      <a
+       [routerLink]="['/dashboard/address']"
+        (click)="handleClose()"
+        class="px-2 py-1 hover:bg-orange-200"
+      >
+        Save Address
+      </a>
+  
+      <button
+        type="button"
+        (click)="handleLogout()"
+        class="text-left px-2 py-1 hover:bg-orange-200"
+      >
+        Log Out
+      </button>
+  
+    </div>
+  
+  </div>
+  
+  }

@@ -1,0 +1,89 @@
+<div
+  (click)="openProduct()"
+  class="group h-full flex flex-col overflow-hidden rounded-2xl bg-white border border-gray-100 shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+>
+  <!-- Discount -->
+  <div
+    *ngIf="product.discount"
+    class="absolute left-2 top-2 z-10 rounded-full bg-green-600 px-2 py-1 text-[10px] font-bold text-white"
+  >
+    {{ product.discount }}% OFF
+  </div>
+
+
+
+  <!-- Image -->
+  <div class="flex h-32 items-center justify-center bg-gray-50 p-3">
+    <img
+      [src]="product.image[0]"
+      [alt]="product.name"
+      class="h-24 w-24 object-contain transition duration-300 group-hover:scale-105"
+    />
+  </div>
+
+  <!-- Content -->
+  <div class="flex flex-1 flex-col p-3">
+
+    <span class="text-[11px] font-semibold text-green-700">
+      ⚡ 10 mins
+    </span>
+
+    <h3 class="mt-1 line-clamp-2 min-h-[38px] text-sm font-semibold leading-5">
+      {{ product.name }}
+    </h3>
+
+    <p class="mt-1 text-xs text-gray-500">
+      {{ product.unit }}
+    </p>
+
+    <div class="mt-auto pt-3">
+
+      <div class="flex items-end justify-between gap-2">
+
+        <div class="min-w-0">
+
+          <div class="text-lg font-bold">
+            {{
+              displayPriceInRupees(
+                getDiscountPrice(product.price, product.discount)
+              )
+            }}
+          </div>
+
+          <div
+            *ngIf="product.discount"
+            class="text-xs text-gray-400 line-through"
+          >
+            {{ displayPriceInRupees(product.price) }}
+          </div>
+
+        </div>
+
+        <div
+          class="shrink-0"
+          (click)="$event.stopPropagation()"
+        >
+          <app-add-to-cart-button [data]="product"></app-add-to-cart-button>
+        </div>
+
+      </div>
+
+      <p
+        *ngIf="product.stock>0 && product.stock<=5"
+        class="mt-2 text-[11px] font-medium text-orange-500"
+      >
+        Only {{product.stock}} left
+      </p>
+
+      <p
+        *ngIf="product.stock==0"
+        class="mt-2 text-[11px] font-medium text-red-500"
+      >
+        Out of Stock
+      </p>
+
+    </div>
+
+  </div>
+
+</div>

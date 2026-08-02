@@ -1,0 +1,194 @@
+<div class="modal-backdrop">
+
+    <div class="modal-card">
+  
+      <!-- Header -->
+  
+      <div class="modal-header">
+  
+        <div>
+          <h3>Edit Address</h3>
+          <p>Update your delivery address</p>
+        </div>
+  
+        <button
+          type="button"
+          class="close-btn"
+          (click)="closeModal()">
+  
+          <i class="bi bi-x-lg"></i>
+  
+        </button>
+  
+      </div>
+  
+      <form [formGroup]="addressForm" (ngSubmit)="submit()">
+
+        <div class="field">
+          <label>Complete Address</label>
+      
+          <div class="input-wrapper textarea">
+      
+            <i class="bi bi-geo-alt-fill"></i>
+      
+            <textarea
+              rows="4"
+              formControlName="address_line"
+              class="form-control"
+              autocomplete="street-address"
+              placeholder="House No. 21, Green Avenue, Near Bus Stand">
+            </textarea>
+      
+          </div>
+      
+        </div>
+      
+        <div class="row g-3">
+      
+          <div class="col-md-6">
+      
+            <div class="field">
+      
+              <label>City</label>
+      
+              <div class="input-wrapper">
+      
+                <i class="bi bi-buildings-fill"></i>
+      
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="city"
+                  autocomplete="address-level2"
+                  placeholder="e.g. Chandigarh">
+      
+              </div>
+      
+            </div>
+      
+          </div>
+      
+          <div class="col-md-6">
+      
+            <div class="field">
+      
+              <label>State</label>
+      
+              <div class="input-wrapper">
+      
+                <i class="bi bi-map-fill"></i>
+      
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="state"
+                  autocomplete="address-level1"
+                  placeholder="e.g. Punjab">
+      
+              </div>
+      
+            </div>
+      
+          </div>
+      
+          <div class="col-md-6">
+      
+            <div class="field">
+      
+              <label>Country</label>
+      
+              <div class="input-wrapper">
+      
+                <i class="bi bi-globe2"></i>
+      
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="country"
+                  autocomplete="country-name"
+                  placeholder="India">
+      
+              </div>
+      
+            </div>
+      
+          </div>
+      
+          <div class="col-md-6">
+      
+            <div class="field">
+      
+              <label>Pincode</label>
+      
+              <div class="input-wrapper">
+      
+                <i class="bi bi-mailbox2"></i>
+      
+                <input
+                  type="text"
+                  inputmode="numeric"
+                  class="form-control"
+                  formControlName="pincode"
+                  autocomplete="postal-code"
+                  placeholder="160022">
+      
+              </div>
+      
+            </div>
+      
+          </div>
+      
+          <div class="col-12">
+      
+            <div class="field">
+      
+              <label>Mobile Number</label>
+      
+              <div class="input-wrapper">
+      
+                <i class="bi bi-telephone-fill"></i>
+      
+                <input
+                  type="tel"
+                  class="form-control"
+                  formControlName="mobile"
+                  autocomplete="tel"
+                  placeholder="9876543210">
+      
+              </div>
+      
+            </div>
+      
+          </div>
+      
+        </div>
+      
+        <div class="modal-footer">
+      
+          <button
+            type="button"
+            class="btn btn-light"
+            (click)="closeModal()">
+      
+            Cancel
+      
+          </button>
+      
+          <button
+            type="submit"
+            class="btn save-btn"
+            [disabled]="loading">
+      
+            <i class="bi bi-check-circle me-2"></i>
+      
+            {{ loading ? 'Updating...' : 'Save Address' }}
+      
+          </button>
+      
+        </div>
+      
+      </form>
+  
+    </div>
+  
+  </div>

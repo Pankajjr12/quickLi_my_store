@@ -1,0 +1,89 @@
+<div class="p-4">
+
+    <!-- Avatar -->
+  
+    <div
+      class="w-20 h-20 bg-red-500 rounded-full overflow-hidden flex items-center justify-center">
+  
+      @if(user.avatar){
+  
+        <img
+          [src]="user.avatar"
+          [alt]="user.name"
+          class="w-full h-full object-cover">
+  
+      } @else {
+  
+        <i class="fa-regular fa-circle-user text-6xl text-white"></i>
+  
+      }
+  
+    </div>
+  
+    <button
+      type="button"
+      (click)="openProfileAvatarEdit = true"
+      class="text-sm mt-3 border px-4 py-1 rounded-full">
+  
+      Edit
+  
+    </button>
+  
+    @if(openProfileAvatarEdit){
+
+      <app-user-profile-avatar-edit
+        (close)="closeProfileAvatarEdit()">
+      </app-user-profile-avatar-edit>
+    
+    }
+  
+    <form
+      class="grid gap-4 mt-5"
+      [formGroup]="profileForm"
+      (ngSubmit)="handleSubmit()">
+  
+      <div>
+  
+        <label>Name</label>
+  
+        <input
+          type="text"
+          formControlName="name"
+          class="w-full p-2 border rounded bg-blue-50">
+  
+      </div>
+  
+      <div>
+  
+        <label>Email</label>
+  
+        <input
+          type="email"
+          formControlName="email"
+          class="w-full p-2 border rounded bg-blue-50">
+  
+      </div>
+  
+      <div>
+  
+        <label>Mobile</label>
+  
+        <input
+          type="text"
+          formControlName="mobile"
+          class="w-full p-2 border rounded bg-blue-50">
+  
+      </div>
+  
+      <button
+        type="submit"
+        [disabled]="loading"
+        class="border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white rounded py-2">
+  
+        {{ loading ? 'Loading...' : 'Submit' }}
+  
+      </button>
+  
+    </form>
+  
+  </div>

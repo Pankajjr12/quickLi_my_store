@@ -1,0 +1,217 @@
+<section class="max-w-7xl mx-auto px-4 py-6 pb-28">
+  <!-- MAIN GRID -->
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <!-- ================= IMAGE GALLERY ================= -->
+
+    <div class="lg:sticky lg:top-24 h-fit">
+      <!-- Main Image -->
+
+      <div class="bg-white rounded-3xl border shadow-sm overflow-hidden">
+        <div class="h-[330px] sm:h-[450px] flex items-center justify-center">
+          <!-- Loading -->
+
+          <div *ngIf="loading" class="w-full h-full skeleton"></div>
+
+          <!-- Image -->
+
+          <img
+            *ngIf="!loading && product?.image?.length"
+            [src]="product.image[selectedImage]"
+            class="w-full h-full object-contain p-8 product-image"
+          />
+
+          <!-- Empty Image -->
+
+          <div *ngIf="!loading && !product?.image?.length" class="text-center text-gray-400">
+            <i class="fa-regular fa-image text-6xl"></i>
+
+            <p class="mt-3">No Image Available</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- THUMBNAILS -->
+
+      <div
+        *ngIf="!loading && product?.image?.length"
+        class="flex gap-3 mt-5 overflow-x-auto scrollbar-hide"
+      >
+        <div
+          *ngFor="let img of product.image; let i = index"
+          (click)="selectedImage = i"
+          class="w-20 h-20 flex-shrink-0 rounded-xl bg-white border-2 cursor-pointer p-2 thumbnail"
+          [class.active]="selectedImage === i"
+        >
+          <img [src]="img" class="w-full h-full object-contain" />
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= PRODUCT INFORMATION ================= -->
+
+    <div class="space-y-6">
+      <!-- STOCK STATUS -->
+
+      <div
+        class="inline-flex px-4 py-2 rounded-full text-sm font-semibold"
+        [ngClass]="product?.stock > 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-600'"
+      >
+        <span *ngIf="product?.stock > 0"> In Stock </span>
+
+        <span *ngIf="product?.stock <= 0"> Out of Stock </span>
+      </div>
+
+      <!-- PRODUCT NAME -->
+
+      <div>
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 leading-tight">
+          {{ product?.name }}
+        </h1>
+
+        <p class="mt-2 text-lg text-gray-500">
+          {{ product?.unit }}
+        </p>
+      </div>
+
+      <!-- PRICE BOX -->
+
+      <div class="price-box p-5">
+        <p class="text-sm text-gray-500">Price</p>
+
+        <div class="flex flex-wrap items-center gap-4 mt-3">
+          <!-- Discount Price -->
+
+          <h2 class="text-4xl font-bold text-green-700">
+            ₹{{ getDiscountPrice(product?.price, product?.discount) }}
+          </h2>
+
+          <!-- Original Price -->
+
+          <span *ngIf="product?.discount" class="text-lg text-gray-400 line-through">
+            ₹{{ product?.price }}
+          </span>
+
+          <!-- Discount -->
+
+          <span
+            *ngIf="product?.discount"
+            class="bg-green-600 text-white px-3 py-1 rounded-full text-sm font-bold"
+          >
+            {{ product?.discount }}% OFF
+          </span>
+        </div>
+      </div>
+
+      <!-- CART BUTTON -->
+
+      <app-add-to-cart-button *ngIf="product?.stock > 0" [data]="product" class="my-2"> </app-add-to-cart-button>
+
+      <button
+        *ngIf="product?.stock <= 0"
+        disabled
+        class="w-full bg-gray-300 text-gray-600 py-4 rounded-2xl font-bold"
+      >
+        OUT OF STOCK
+      </button>
+
+      <!-- FEATURES -->
+
+      <div class="info-card p-5 mt-2">
+        <h2 class="text-xl font-bold mb-5">Why shop with us?</h2>
+
+        <div class="space-y-5">
+          <div class="flex gap-4 items-center">
+            <div
+              class="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center text-2xl"
+            >
+              🚚
+            </div>
+
+            <div>
+              <h3 class="font-semibold">Fast Delivery</h3>
+
+              <p class="text-sm text-gray-500">Fresh products delivered quickly</p>
+            </div>
+          </div>
+
+          <div class="flex gap-4 items-center">
+            <div
+              class="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center text-2xl"
+            >
+              💰
+            </div>
+
+            <div>
+              <h3 class="font-semibold">Best Prices</h3>
+
+              <p class="text-sm text-gray-500">Affordable prices and offers</p>
+            </div>
+          </div>
+
+          <div class="flex gap-4 items-center">
+            <div
+              class="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center text-2xl"
+            >
+              🛒
+            </div>
+
+            <div>
+              <h3 class="font-semibold">Quality Products</h3>
+
+              <p class="text-sm text-gray-500">Trusted grocery products</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= DESCRIPTION ================= -->
+
+  <div class="mt-10 bg-white rounded-3xl border p-6">
+    <h2 class="text-2xl font-bold mb-4">Description</h2>
+
+    <p class="text-gray-600 leading-8">
+      {{ product?.description }}
+    </p>
+
+    <!-- MORE DETAILS -->
+
+    <div *ngIf="product?.more_details && (product.more_details | keyvalue).length" class="mt-8">
+      <h2 class="text-2xl font-bold mb-5">Product Details</h2>
+
+      <div
+        *ngFor="let detail of product.more_details | keyvalue"
+        class="flex justify-between border-b py-4"
+      >
+        <span class="font-semibold text-gray-800">
+          {{ detail.key }}
+        </span>
+
+        <span class="text-gray-500 text-right">
+          {{ detail.value }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MOBILE FIXED CART ================= -->
+
+  <div
+    *ngIf="product?.stock > 0"
+    class="fixed bottom-0 left-0 right-0 lg:hidden bg-white border-t shadow-xl p-4 z-50"
+  >
+    <div class="flex items-center justify-between">
+      <div>
+        <p class="text-xs text-gray-500">Total Price</p>
+
+        <p class="font-bold text-xl text-green-700">
+          ₹{{ getDiscountPrice(product?.price, product?.discount) }}
+        </p>
+      </div>
+
+      <button class="bg-green-600 text-white px-8 py-3 rounded-xl font-bold">ADD</button>
+    </div>
+  </div>
+</section>

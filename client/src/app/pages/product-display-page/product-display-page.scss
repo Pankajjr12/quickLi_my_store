@@ -1,0 +1,334 @@
+/* ===============================
+   HIDE SCROLLBAR
+================================ */
+
+.scrollbar-hide {
+
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  
+  
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  
+  }
+  
+  
+  
+  /* ===============================
+     SMOOTH SCROLL
+  ================================ */
+  
+  .scroll-smooth {
+  
+    scroll-behavior: smooth;
+  
+  }
+  
+  
+  
+  
+  
+  /* ===============================
+     PRODUCT IMAGE
+  ================================ */
+  
+  .product-image {
+  
+    transition: transform .35s ease;
+  
+  
+    &:hover {
+  
+      transform: scale(1.05);
+  
+    }
+  
+  }
+  
+  
+  
+  
+  
+  
+  
+  /* ===============================
+     THUMBNAILS
+  ================================ */
+  
+  .thumbnail {
+  
+    transition: all .25s ease;
+  
+    border-color: transparent;
+  
+  
+    &:hover {
+  
+      transform: translateY(-3px);
+  
+      border-color: #86efac;
+  
+    }
+  
+  
+  
+    &.active {
+  
+      border-color: #16a34a;
+  
+      background: #f0fdf4;
+  
+      transform: scale(1.05);
+  
+    }
+  
+  
+  }
+  
+  
+  
+  
+  
+  
+  
+  /* ===============================
+     INFORMATION CARD
+  ================================ */
+  
+  .info-card {
+  
+  
+    background: white;
+  
+    border-radius: 24px;
+  
+    border: 1px solid #f1f5f9;
+  
+    box-shadow:
+      0 4px 20px rgba(0,0,0,.05);
+  
+  
+  }
+  
+  
+  
+  
+  
+  
+  
+  /* ===============================
+     PRICE BOX
+  ================================ */
+  
+  .price-box {
+  
+  
+    background: linear-gradient(
+      135deg,
+      #f0fdf4,
+      #ffffff
+    );
+  
+  
+    border-radius: 22px;
+  
+    border: 1px solid #86efac;
+  
+  
+  }
+  
+  
+  
+  
+  
+  
+  
+  /* ===============================
+     ADD BUTTON
+  ================================ */
+  
+  .add-btn {
+  
+  
+    transition: all .25s ease;
+  
+  
+  
+    &:hover {
+  
+  
+      transform: translateY(-2px);
+  
+  
+      box-shadow:
+      0 12px 25px rgba(22,163,74,.25);
+  
+  
+    }
+  
+  
+  
+    &:active {
+  
+      transform: scale(.98);
+  
+    }
+  
+  
+  }
+  
+  
+  
+  
+  
+  
+  
+  /* ===============================
+     SKELETON LOADING
+  ================================ */
+  
+  .skeleton {
+  
+  
+    background: linear-gradient(
+  
+      90deg,
+  
+      #f3f4f6 25%,
+  
+      #e5e7eb 50%,
+  
+      #f3f4f6 75%
+  
+    );
+  
+  
+    background-size:200% 100%;
+  
+  
+    animation:
+    shimmer 1.4s infinite linear;
+  
+  
+  }
+  
+  
+  
+  
+  @keyframes shimmer {
+  
+  
+    0% {
+  
+      background-position:200% 0;
+  
+    }
+  
+  
+    100% {
+  
+      background-position:-200% 0;
+  
+    }
+  
+  
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  /* ===============================
+     DESKTOP
+  ================================ */
+  
+  
+  @media(min-width:1024px){
+  
+  
+    .product-gallery{
+  
+      position:sticky;
+  
+      top:90px;
+  
+    }
+  
+  
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  /* ===============================
+     TABLET
+  ================================ */
+  
+  
+  @media(max-width:1023px){
+  
+  
+    .price-box{
+  
+  
+      padding:18px;
+  
+  
+    }
+  
+  
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  /* ===============================
+     MOBILE
+  ================================ */
+  
+  
+  @media(max-width:640px){
+  
+  
+  
+    .price-box{
+  
+  
+      border-radius:18px;
+  
+  
+    }
+  
+  
+  
+  
+    .product-image{
+  
+  
+      padding:20px;
+  
+  
+    }
+  
+  
+  
+  
+  }

@@ -1,0 +1,54 @@
+<section class="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm h-screen overflow-auto p-2">
+  <div class="bg-white p-4 w-full max-w-lg mt-8 mx-auto rounded">
+    <div class="flex justify-between items-center">
+      <h2 class="font-semibold">Add Address</h2>
+
+      <button (click)="closeModal()" class="hover:text-red-500">✕</button>
+    </div>
+
+    <form [formGroup]="addressForm" (submit)="submit()" class="mt-4 grid gap-4">
+      <div class="grid gap-1">
+        <label> Address Line : </label>
+
+        <input type="text" formControlName="addressline" class="border bg-blue-50 p-2 rounded" />
+      </div>
+
+      <div class="grid gap-1">
+        <label> City : </label>
+
+        <input type="text" formControlName="city" class="border bg-blue-50 p-2 rounded" />
+      </div>
+
+      <div class="grid gap-1">
+        <label> State : </label>
+
+        <input type="text" formControlName="state" class="border bg-blue-50 p-2 rounded" />
+      </div>
+
+      <div class="grid gap-1">
+        <label> Pincode : </label>
+
+        <input type="text" formControlName="pincode" class="border bg-blue-50 p-2 rounded" />
+      </div>
+
+      <div class="grid gap-1">
+        <label> Country : </label>
+
+        <input type="text" formControlName="country" class="border bg-blue-50 p-2 rounded" />
+      </div>
+
+      <div class="grid gap-1">
+        <label> Mobile No. : </label>
+
+        <input type="text" formControlName="mobile" class="border bg-blue-50 p-2 rounded" />
+      </div>
+
+      <button
+        type="submit"
+        class="bg-green-600 text-white w-full py-2 font-semibold mt-4 hover:bg-green-700"
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+</section>

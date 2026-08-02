@@ -1,0 +1,128 @@
+<div class="dialog-container">
+
+    <div class="dialog-header">
+
+        <h2>Edit Sub Category</h2>
+
+        <button
+            class="close-btn"
+            type="button"
+            (click)="dialogRef.close()">
+
+            ✕
+
+        </button>
+
+    </div>
+
+    <form
+        [formGroup]="form"
+        (ngSubmit)="updateSubCategory()">
+
+        <!-- Name -->
+
+        <div class="form-group">
+
+            <label>Name</label>
+
+            <input
+                type="text"
+                formControlName="name"
+                placeholder="Enter sub category name">
+
+        </div>
+
+        <!-- Image -->
+
+        <div class="form-group">
+
+            <label>Image</label>
+
+            <div class="image-section">
+
+                <div class="image-preview">
+
+                    <img
+                        *ngIf="imageUrl"
+                        [src]="imageUrl">
+
+                    <span *ngIf="!imageUrl">
+                        No Image
+                    </span>
+
+                </div>
+
+                <label class="upload-btn">
+
+                    {{loading ? 'Uploading...' : 'Upload Image'}}
+
+                    <input
+                        hidden
+                        type="file"
+                        (change)="uploadImage($event)">
+
+                </label>
+
+            </div>
+
+        </div>
+
+        <!-- Categories -->
+
+        <div class="form-group">
+
+            <label>Select Category</label>
+
+            <div class="category-box">
+
+                <div class="selected-list">
+
+                    <div
+                        class="chip"
+                        *ngFor="let item of selectedCategories">
+
+                        {{item.name}}
+
+                        <button
+                            type="button"
+                            (click)="removeCategory(item._id)">
+
+                            ✕
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <select (change)="addCategory($event)">
+
+                    <option value="">
+                        Select Category
+                    </option>
+
+                    <option
+                        *ngFor="let c of categories"
+                        [value]="c._id">
+
+                        {{c.name}}
+
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+        <button
+            class="submit-btn"
+            [disabled]="form.invalid || !imageUrl">
+
+            {{loading ? 'Saving...' : 'Update Sub Category'}}
+
+        </button>
+
+    </form>
+
+</div>

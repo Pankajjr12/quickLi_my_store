@@ -1,0 +1,327 @@
+<div class="modal-backdrop">
+  <div class="edit-product-modal">
+
+    <!-- Header -->
+    <div class="modal-header">
+      <h2>Edit Product</h2>
+      <button type="button" class="close-btn" (click)="cancel()">✕</button>
+    </div>
+
+    <!-- Form -->
+    <form
+      class="product-form"
+      [formGroup]="productForm"
+      (ngSubmit)="onSubmit()"
+    >
+
+      <!-- Basic Information -->
+      <div class="form-group">
+        <label>
+          Product Name
+          <span class="required">*</span>
+        </label>
+
+        <input
+          type="text"
+          class="form-control"
+          formControlName="name"
+          placeholder="Enter product name"
+        />
+
+        <small class="error" *ngIf="isInvalid('name')">
+          Product name is required.
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label>
+          Description
+          <span class="required">*</span>
+        </label>
+
+        <textarea
+          rows="5"
+          class="form-control"
+          formControlName="description"
+          placeholder="Enter description">
+        </textarea>
+
+        <small class="error" *ngIf="isInvalid('description')">
+          Description is required.
+        </small>
+      </div>
+
+      <!-- Images -->
+      <div class="form-group">
+
+        <div class="section-header">
+          <label>Product Images</label>
+
+          <label class="upload-btn">
+            <input
+              hidden
+              type="file"
+              accept="image/*"
+              (change)="onImageSelected($event)"
+            />
+            Upload Image
+          </label>
+        </div>
+
+        <div *ngIf="imageLoading" class="upload-loading">
+          Uploading image...
+        </div>
+
+        <div class="image-grid" *ngIf="images.length">
+          <div
+            class="image-card"
+            *ngFor="let image of imageList; let i = index; trackBy: trackByIndex"
+          >
+            <img
+              [src]="image"
+              alt="Product Image"
+              (click)="previewImage(image)"
+            />
+
+            <div class="image-actions">
+              <button
+                type="button"
+                class="btn-view"
+                (click)="previewImage(image)"
+              >
+                View
+              </button>
+
+              <button
+                type="button"
+                class="btn-delete"
+                (click)="removeImage(i)"
+              >
+                Remove
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="empty-images"
+          *ngIf="!images.length && !imageLoading"
+        >
+          No product images uploaded.
+        </div>
+
+      </div>
+
+      <!-- Category -->
+      <div class="form-group">
+
+        <label>Category</label>
+
+        <div class="select-group">
+          <select
+            class="form-control"
+            [value]="selectedCategory"
+            (change)="selectedCategory = $any($event.target).value"
+          >
+            <option value="">Select Category</option>
+
+            <option
+              *ngFor="let category of categories"
+              [value]="category._id"
+            >
+              {{ category.name }}
+            </option>
+          </select>
+
+          <button
+            type="button"
+            class="btn-add"
+            (click)="addCategory(selectedCategory)"
+          >
+            Add
+          </button>
+        </div>
+
+        <div class="selected-items">
+          <span
+            class="chip"
+            *ngFor="let category of selectedCategories; let i = index"
+          >
+            {{ category.name }}
+            <button
+              type="button"
+              (click)="removeCategory(i)"
+            >
+              ×
+            </button>
+          </span>
+        </div>
+
+      </div>
+
+      <!-- Sub Category -->
+      <div class="form-group">
+
+        <label>Sub Category</label>
+
+        <div class="select-group">
+          <select
+            class="form-control"
+            [value]="selectedSubCategory"
+            (change)="selectedSubCategory = $any($event.target).value"
+          >
+            <option value="">Select Sub Category</option>
+
+            <option
+              *ngFor="let sub of subCategories"
+              [value]="sub._id"
+            >
+              {{ sub.name }}
+            </option>
+          </select>
+
+          <button
+            type="button"
+            class="btn-add"
+            (click)="addSubCategory(selectedSubCategory)"
+          >
+            Add
+          </button>
+        </div>
+
+        <div class="selected-items">
+          <span
+            class="chip"
+            *ngFor="let sub of selectedSubCategories; let i = index"
+          >
+            {{ sub.name }}
+
+            <button
+              type="button"
+              (click)="removeSubCategory(i)"
+            >
+              ×
+            </button>
+          </span>
+        </div>
+
+      </div>
+
+      <!-- Pricing -->
+      <div class="grid-3">
+
+        <div class="form-group">
+          <label>Unit</label>
+          <input
+            class="form-control"
+            formControlName="unit"
+            placeholder="kg, pcs, litre..."
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Stock</label>
+          <input
+            type="number"
+            class="form-control"
+            formControlName="stock"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Price</label>
+          <input
+            type="number"
+            class="form-control"
+            formControlName="price"
+          />
+        </div>
+
+      </div>
+
+      <div class="form-group">
+        <label>Discount (%)</label>
+
+        <input
+          type="number"
+          class="form-control"
+          formControlName="discount"
+        />
+      </div>
+
+      <!-- Footer -->
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn-secondary"
+          (click)="cancel()"
+        >
+          Cancel
+        </button>
+
+        <button
+          type="submit"
+          class="btn-primary"
+          [disabled]="productForm.invalid"
+        >
+          Save Changes
+        </button>
+      </div>
+
+    </form>
+
+    <!-- Add Field Modal -->
+    <div class="modal-backdrop" *ngIf="openAddField">
+      <div class="small-modal">
+
+        <h3>Add New Field</h3>
+
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="fieldName"
+          placeholder="Example: Brand"
+        />
+
+        <div class="modal-actions">
+          <button
+            type="button"
+            class="btn-secondary"
+            (click)="closeFieldDialog()"
+          >
+            Cancel
+          </button>
+
+          <button
+            type="button"
+            class="btn-primary"
+            (click)="addField()"
+          >
+            Add Field
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Image Preview -->
+    <div class="modal-backdrop" *ngIf="viewImageUrl">
+      <div class="image-preview-modal">
+
+        <button
+          class="preview-close"
+          (click)="closePreview()"
+        >
+          ✕
+        </button>
+
+        <img
+          [src]="viewImageUrl"
+          alt="Preview"
+        />
+
+      </div>
+    </div>
+
+  </div>
+</div>
