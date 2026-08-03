@@ -10,8 +10,6 @@
     {{ product.discount }}% OFF
   </div>
 
-
-
   <!-- Image -->
   <div class="flex h-32 items-center justify-center bg-gray-50 p-3">
     <img
@@ -23,10 +21,7 @@
 
   <!-- Content -->
   <div class="flex flex-1 flex-col p-3">
-
-    <span class="text-[11px] font-semibold text-green-700">
-      ⚡ 10 mins
-    </span>
+    <span class="text-[11px] font-semibold text-green-700"> ⚡ 10 mins </span>
 
     <h3 class="mt-1 line-clamp-2 min-h-[38px] text-sm font-semibold leading-5">
       {{ product.name }}
@@ -37,53 +32,32 @@
     </p>
 
     <div class="mt-auto pt-3">
-
-      <div class="flex items-end justify-between gap-2">
-
-        <div class="min-w-0">
-
-          <div class="text-lg font-bold">
-            {{
-              displayPriceInRupees(
-                getDiscountPrice(product.price, product.discount)
-              )
-            }}
+      <div class="flex items-end gap-2">
+        <div class="flex-1 min-w-0">
+          <div class="text-base sm:text-lg font-bold truncate">
+            {{ displayPriceInRupees(getDiscountPrice(product.price, product.discount)) }}
           </div>
 
-          <div
-            *ngIf="product.discount"
-            class="text-xs text-gray-400 line-through"
-          >
+          <div *ngIf="product.discount" class="text-xs text-gray-400 line-through truncate">
             {{ displayPriceInRupees(product.price) }}
           </div>
-
         </div>
 
-        <div
-          class="shrink-0"
-          (click)="$event.stopPropagation()"
-        >
-          <app-add-to-cart-button [data]="product"></app-add-to-cart-button>
+        <div class="flex-shrink-0 w-[62px] sm:w-[74px]" (click)="$event.stopPropagation()">
+          <app-add-to-cart-button [data]="product"> </app-add-to-cart-button>
         </div>
-
       </div>
 
       <p
-        *ngIf="product.stock>0 && product.stock<=5"
+        *ngIf="product.stock > 0 && product.stock <= 5"
         class="mt-2 text-[11px] font-medium text-orange-500"
       >
-        Only {{product.stock}} left
+        Only {{ product.stock }} left
       </p>
 
-      <p
-        *ngIf="product.stock==0"
-        class="mt-2 text-[11px] font-medium text-red-500"
-      >
+      <p *ngIf="product.stock == 0" class="mt-2 text-[11px] font-medium text-red-500">
         Out of Stock
       </p>
-
     </div>
-
   </div>
-
 </div>

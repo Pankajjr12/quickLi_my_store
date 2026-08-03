@@ -1,117 +1,172 @@
 <section class="bg-gray-50 min-h-screen">
+
   <!-- ================= MOBILE ================= -->
   <div class="lg:hidden flex h-[calc(100vh-64px)]">
+
     <!-- Sidebar -->
-    <aside class="w-[88px] flex-shrink-0 border-r bg-white">
+    <aside class="w-[72px] flex-shrink-0 border-r bg-white">
       <app-category-sidebar
         [categories]="displaySubCategory"
         [selectedCategoryId]="subCategoryId"
-        (categoryClick)="changeSubCategory($event)"
-      >
+        (categoryClick)="changeSubCategory($event)">
       </app-category-sidebar>
     </aside>
 
     <!-- Products -->
-    <main class="flex-1 overflow-y-auto scrollbar-hide">
+    <main class="flex-1 overflow-y-auto">
+
       <!-- Header -->
       <div class="sticky top-0 z-20 bg-white border-b px-3 py-3">
         <h2 class="font-bold text-lg truncate">
           {{ subCategoryName }}
         </h2>
 
-        <p class="text-xs text-gray-500">{{ products.length }} Products</p>
+        <p class="text-xs text-gray-500">
+          {{ products.length }} Products
+        </p>
       </div>
 
       <!-- Loading -->
-      <div *ngIf="loading" class="grid grid-cols-2 gap-2 p-2 place-items-center">
-        <app-card-loading *ngFor="let item of loadingCards"> </app-card-loading>
+      <div
+        *ngIf="loading"
+        class="grid grid-cols-2 gap-2 p-2">
+
+        <app-card-loading
+          *ngFor="let item of loadingCards">
+        </app-card-loading>
+
       </div>
 
       <!-- Products -->
-      <div *ngIf="!loading" class="grid grid-cols-2 gap-3 p-3">
-        <app-card-product *ngFor="let product of products" [product]="product" class="w-full">
+      <div
+        *ngIf="!loading"
+        class="grid grid-cols-2 gap-2 p-2">
+
+        <app-card-product
+          *ngFor="let product of products"
+          [product]="product"
+          class="w-full">
         </app-card-product>
+
       </div>
+
     </main>
+
   </div>
 
   <!-- ================= DESKTOP ================= -->
 
   <div class="hidden lg:block">
+
     <div class="container mx-auto px-5 py-6">
+
       <div class="grid grid-cols-12 gap-6">
+
         <!-- Sidebar -->
+
         <aside class="col-span-3 xl:col-span-2">
+
           <div class="bg-white rounded-2xl shadow overflow-hidden sticky top-24">
+
             <div class="px-5 py-4 border-b">
-              <h2 class="font-bold text-lg">Categories</h2>
+              <h2 class="font-bold text-lg">
+                Categories
+              </h2>
             </div>
 
             <div class="max-h-[75vh] overflow-y-auto scrollbar-hide">
+
               <a
                 *ngFor="let sub of displaySubCategory"
                 [routerLink]="[
                   '/' + validURLConvert(sub.category[0].name) + '-' + sub.category[0]._id,
                   validURLConvert(sub.name) + '-' + sub._id
                 ]"
-                class="flex items-center gap-4 px-4 py-3 border-b transition hover:bg-green-50"
+                class="flex items-center gap-4 px-4 py-3 border-b hover:bg-green-50 transition"
                 [ngClass]="{
                   'bg-green-100 border-l-4 border-green-600': sub._id === subCategoryId
-                }"
-              >
+                }">
+
                 <div class="w-14 h-14 rounded-xl bg-gray-100 flex items-center justify-center">
-                  <img [src]="sub.image" class="w-10 h-10 object-contain" />
+                  <img
+                    [src]="sub.image"
+                    class="w-10 h-10 object-contain">
                 </div>
 
                 <span class="font-medium text-sm xl:text-base">
                   {{ sub.name }}
                 </span>
+
               </a>
+
             </div>
+
           </div>
+
         </aside>
 
         <!-- Products -->
 
         <main class="col-span-9 xl:col-span-10">
+
           <!-- Heading -->
 
           <div class="sticky top-24 z-20 bg-white rounded-2xl shadow p-5 mb-5">
+
             <h1 class="text-3xl font-bold">
               {{ subCategoryName }}
             </h1>
 
-            <p class="text-gray-500 mt-1">{{ products.length }} Products</p>
+            <p class="text-gray-500 mt-1">
+              {{ products.length }} Products
+            </p>
+
           </div>
 
           <!-- Loading -->
 
           <div
             *ngIf="loading"
-            class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-5"
-          >
-            <app-card-loading *ngFor="let item of loadingCards" > </app-card-loading>
+            class="grid
+              grid-cols-2
+              md:grid-cols-3
+              lg:grid-cols-4
+              xl:grid-cols-5
+              2xl:grid-cols-6
+              gap-4">
+
+            <app-card-loading
+              *ngFor="let item of loadingCards">
+            </app-card-loading>
+
           </div>
 
-          <!-- Product Grid -->
+          <!-- Products -->
 
           <div
-          *ngIf="!loading"
-          class="flex flex-wrap gap-5 justify-start">
-        
-          <div
-            *ngFor="let product of products"
-            class="w-[220px]">
-        
+            *ngIf="!loading"
+            class="grid
+              grid-cols-2
+              md:grid-cols-3
+              lg:grid-cols-4
+              xl:grid-cols-5
+              2xl:grid-cols-6
+              gap-4">
+
             <app-card-product
-              [product]="product">
+              *ngFor="let product of products"
+              [product]="product"
+              class="w-full min-w-0">
             </app-card-product>
-        
+
           </div>
-        
-        </div>
+
         </main>
+
       </div>
+
     </div>
+
   </div>
+
 </section>
