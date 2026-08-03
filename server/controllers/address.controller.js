@@ -38,7 +38,6 @@ export const addAddressController = async(request,response)=>{
         })
     }
 }
-
 export const getAddressController = async(request,response)=>{
     try {
         const userId = request.userId // middleware auth
