@@ -8,8 +8,7 @@ import { setAllCategory, setAllSubCategory, setLoadingCategory } from './store/p
 import { SubCategoryService } from './core/services/sub-category';
 import { ToastrService } from 'ngx-toastr';
 import { GlobalService } from './shared/services/global-service';
-import { NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',

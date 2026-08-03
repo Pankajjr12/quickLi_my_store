@@ -4,9 +4,7 @@ import { AddressService } from '../../core/services/address-service';
 import { OrderService } from '../../core/services/oder-service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { loadStripe } from '@stripe/stripe-js';
 import { PaymentService } from '../../core/services/payment-service';
-import { environment } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-checkout-page',

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { GlobalService } from '../../shared/services/global-service';
 import { AddressService } from '../../core/services/address-service';
 import { ToastrService } from 'ngx-toastr';
 import * as AddressActions from '../../store/address/address.actions'

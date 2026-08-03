@@ -1,7 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CategoryService } from '../../core/services/category';
-import { ToastrService } from 'ngx-toastr';
-import { UploadService } from '../../core/services/upload';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 
