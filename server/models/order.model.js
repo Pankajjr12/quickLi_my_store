@@ -42,11 +42,6 @@ const orderSchema = new mongoose.Schema({
         type : String,
         default : ""
     },
-    status: {
-        type: String,
-        enum: ["In Progress", "Delivered", "Cancelled"],
-        default: "In Progress"
-    }
 },{
     timestamps : true
 })

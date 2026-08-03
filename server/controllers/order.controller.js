@@ -163,49 +163,55 @@ const getOrderProductItems = async ({
 };
 
 export async function webhookStripe(request, response) {
-
   console.log("========== WEBHOOK HIT ==========");
-  console.log(req.body);
-  const event = request.body;
-  const endPointSecret = process.env.STRIPE_ENPOINT_WEBHOOK_SECRET_KEY;
+  console.log(request.body);
+  try {
+    const event = request.body;
+    const endPointSecret = process.env.STRIPE_ENPOINT_WEBHOOK_SECRET_KEY;
 
-  console.log("event", event);
+    console.log("event", event);
 
-  // Handle the event
-  switch (event.type) {
-    case "checkout.session.completed":
-      const session = event.data.object;
-      const lineItems = await Stripe.checkout.sessions.listLineItems(
-        session.id
-      );
-      const userId = session.metadata.userId;
-      const orderProduct = await getOrderProductItems({
-        lineItems: lineItems,
-        userId: userId,
-        addressId: session.metadata.addressId,
-        paymentId: session.payment_intent,
-        payment_status: session.payment_status,
-      });
-
-      const order = await OrderModel.insertMany(orderProduct);
-
-      console.log(order);
-      if (Boolean(order[0])) {
-        const removeCartItems = await UserModel.findByIdAndUpdate(userId, {
-          shopping_cart: [],
-        });
-        const removeCartProductDB = await CartProductModel.deleteMany({
+    // Handle the event
+    switch (event.type) {
+      case "checkout.session.completed":
+        const session = event.data.object;
+        const lineItems = await Stripe.checkout.sessions.listLineItems(
+          session.id
+        );
+        const userId = session.metadata.userId;
+        const orderProduct = await getOrderProductItems({
+          lineItems: lineItems,
           userId: userId,
+          addressId: session.metadata.addressId,
+          paymentId: session.payment_intent,
+          payment_status: session.payment_status,
         });
-      }
-      break;
-    default:
-      console.log(`Unhandled event type ${event.type}`);
-  }
 
-  
-  // Return a response to acknowledge receipt of the event
-  response.json({ received: true });
+        const order = await OrderModel.insertMany(orderProduct);
+
+        console.log(order);
+        if (Boolean(order[0])) {
+          const removeCartItems = await UserModel.findByIdAndUpdate(userId, {
+            shopping_cart: [],
+          });
+          const removeCartProductDB = await CartProductModel.deleteMany({
+            userId: userId,
+          });
+        }
+        break;
+      default:
+        console.log(`Unhandled event type ${event.type}`);
+    }
+
+    // Return a response to acknowledge receipt of the event
+    response.json({ received: true });
+  } catch (err) {
+    console.error(err);
+    response.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
 }
 
 export async function getOrderDetailsController(request, response) {

@@ -1,6 +1,5 @@
-// import { environment } from "../../../environments/environment.prod";
+import { environment } from "../../../environments/environment.prod";
 
-import { environment } from "../../../environments/environment";
 
 export const SummaryApi = {
   baseUrl: environment.apiUrl,
