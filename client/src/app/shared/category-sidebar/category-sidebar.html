@@ -1,5 +1,29 @@
 <div class="h-full bg-white overflow-y-auto scrollbar-hide">
 
+  <!-- Skeleton -->
+  <ng-container *ngIf="loading; else categoryList">
+
+    <div
+      *ngFor="let item of [1,2,3,4,5,6]"
+      class="relative flex flex-col items-center px-2 py-3 border-b animate-pulse">
+
+      <!-- Image -->
+      <div
+        class="w-14 h-14 rounded-xl bg-gray-200">
+      </div>
+
+      <!-- Name -->
+      <div
+        class="mt-2 h-3 w-10 rounded bg-gray-200">
+      </div>
+
+    </div>
+
+  </ng-container>
+
+  <!-- Actual Categories -->
+  <ng-template #categoryList>
+
     <div
       *ngFor="let category of categories"
       (click)="selectCategory(category)"
@@ -7,30 +31,32 @@
       [ngClass]="{
         'bg-green-50': selectedCategoryId === category._id
       }">
-  
+
       <!-- Active Indicator -->
       <div
         *ngIf="selectedCategoryId === category._id"
         class="absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-green-600">
       </div>
-  
+
       <!-- Image -->
       <div
         class="w-14 h-14 rounded-xl bg-gray-100 flex items-center justify-center overflow-hidden">
-  
+
         <img
           [src]="category.image"
           [alt]="category.name"
           class="w-10 h-10 object-contain">
-  
+
       </div>
-  
+
       <!-- Name -->
       <p
         class="mt-2 text-[11px] leading-4 text-center font-medium text-gray-700 break-words line-clamp-2 px-1 w-full">
         {{ category.name }}
       </p>
-  
+
     </div>
-  
-  </div>
+
+  </ng-template>
+
+</div>

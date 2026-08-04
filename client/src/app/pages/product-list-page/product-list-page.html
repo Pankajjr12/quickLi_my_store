@@ -8,6 +8,7 @@
       <app-category-sidebar
         [categories]="displaySubCategory"
         [selectedCategoryId]="subCategoryId"
+         [loading]="subCategoryLoading"
         (categoryClick)="changeSubCategory($event)">
       </app-category-sidebar>
     </aside>

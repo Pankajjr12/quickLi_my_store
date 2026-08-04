@@ -9,7 +9,7 @@ import { validURLConvert } from '../../core/utils/valideURLConvert';
 })
 export class CategorySidebar {
   @Input() categories: any[] = [];
-
+  @Input() loading = false;
   @Input() selectedCategoryId = '';
 
   @Output() categoryClick = new EventEmitter<any>();

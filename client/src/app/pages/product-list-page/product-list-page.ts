@@ -21,7 +21,7 @@ export class ProductListPage implements OnInit {
   page = 1;
   limit = 8;
   totalPage = 1;
-
+  subCategoryLoading = true;
   categoryId = '';
   subCategoryId = '';
   subCategoryName = '';
@@ -93,18 +93,25 @@ export class ProductListPage implements OnInit {
 
   loadSubCategories(): void {
 
+    this.subCategoryLoading = true;
+  
     this.subCategoryService.getSubCategory().subscribe({
-
+  
       next: (res: any) => {
-
+  
         this.displaySubCategory = res.data.filter((sub: any) =>
           sub.category.some((cat: any) => cat._id === this.categoryId)
         );
-
+  
+        this.subCategoryLoading = false;
+      },
+  
+      error: () => {
+        this.subCategoryLoading = false;
       }
-
+  
     });
-
+  
   }
 
   changeSubCategory(sub: any): void {
